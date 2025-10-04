@@ -1,0 +1,51 @@
+@startuml
+
+!theme plain
+top to bottom direction
+skinparam linetype ortho
+
+class EnglishSolitaireModel {
+  + EnglishSolitaireModel(int, int): 
+  + EnglishSolitaireModel(int, int, int): 
+  + EnglishSolitaireModel(int): 
+  + EnglishSolitaireModel(): 
+  - armThickness: int
+  - board: SlotState[][]
+  + getSlotAt(int, int): SlotState
+  + isGameOver(): boolean
+  + getBoardSize(): int
+  + move(int, int, int, int): void
+  + getScore(): int
+  - isValidPosition(int, int): boolean
+}
+interface MarbleSolitaireModel << interface >> {
+  + isGameOver(): boolean
+  + move(int, int, int, int): void
+}
+interface MarbleSolitaireModelState << interface >> {
+  + getSlotAt(int, int): SlotState
+  + getBoardSize(): int
+  + getScore(): int
+}
+class MarbleSolitaireTextView {
+  + MarbleSolitaireTextView(MarbleSolitaireModelState): 
+  - model: MarbleSolitaireModelState
+  + toString(): String
+}
+interface MarbleSolitaireView << interface >> {
+  + toString(): String
+}
+enum SlotState << enumeration >> {
+  + SlotState(): 
+  + Empty: 
+  + Marble: 
+  + Invalid: 
+  + valueOf(String): SlotState
+  + values(): SlotState[]
+}
+
+EnglishSolitaireModel      -[#008200,dashed]-^  MarbleSolitaireModel      
+MarbleSolitaireModel       -[#008200,plain]-^  MarbleSolitaireModelState 
+MarbleSolitaireTextView    -[#008200,dashed]-^  MarbleSolitaireView       
+SlotState                  +-[#820000,plain]-  MarbleSolitaireModelState 
+@enduml
